@@ -1,11 +1,7 @@
 use mongodb::{Client, options::{ClientOptions, ResolverConfig}};
-use std::error::Error;
-// use std::fs::File;
-// use std::io::Read;
-use std::io;
-// use bson::{doc, bson};
 use bson::doc;
-
+use std::error::Error;
+use std::io;
 use tokio;
 
 #[tokio::main]
@@ -25,30 +21,54 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .await?;
     let client = Client::with_options(options)?;
 
-    // let mut file = File::open("user.json").unwrap();
-    // let mut data = String::new();
-    // file.read_to_string(&mut data).unwrap();
-    // let _json = bson::from_str(&data).unwrap();
-    // let _fields = bson!(data);
-
     let filter: mongodb::bson::Document = doc! { "email" : &email.trim_end() };
-    let update: mongodb::bson::Document = doc! { "$set" : {"temp" : "5" }};
-    // let update: mongodb::bson::Document = doc! { "$set": fields };
+    let update: mongodb::bson::Document = doc! { "$set": {
+        "peruri": {
+            "register": {
+                "name":"Lukman Makarim",
+                "phone":"+6281356286096",
+                "type":"INDIVIDUAL",
+                "email":"lukman@gmail.com",
+                "ktp":"14045",
+                "selfPhoto":null,
+                "address":"Jl. Intan RSPP No.16C Cilandak Barat",
+                "city":"South Jakarta",
+                "province":"Jakarta",
+                "gender":"M",
+                "placeOfBirth":"Jakarta",
+                "dateOfBirth":"14\\/02\\/1996"
+            }
+        },
+        "peruri_status": "APPROVED",
+        "peruri_response": {
+            "register":{
+                "resultCode":"0",
+                "resultDesc":"Success"
+            },
+            "video":{
+                "resultCode":"0",
+                "resultDesc":"Success"
+            },
+            "speciment":{
+                "resultCode":"0",
+                "resultDesc":"Sukses update speciment"
+            }
+        }
+    }};
 
     let user: mongodb::results::UpdateResult = client
         .database(&db_name)
         .collection::<String>("users")
         .update_one(filter, update, None)
-        .await
-        .unwrap();
+        .await?;
 
-    let base_user = serde_json::to_string_pretty(&user).unwrap();
+    let base_user = serde_json::to_string_pretty(&user)?;
 
     println!("{}", base_user);
 
     Ok(())
 }
 
-    // email:example
-    // lukman.makarim96@gmail.com // KYC conleted
-    // test-123.1evyw@aleeas.com
+// email:example
+// lukman.makarim96@gmail.com // KYC conleted
+// test-123.1evyw@aleeas.com

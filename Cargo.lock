@@ -536,6 +536,7 @@ dependencies = [
  "mongodb",
  "rustc-serialize",
  "serde",
+ "serde_bson",
  "serde_json",
  "tokio",
 ]
@@ -857,6 +858,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ce31e24b01e1e524df96f1c2fdd054405f8d7376249a5110886fb4b658484789"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde_bson"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f55a9c200c43d6e6e4db10568daef0764c945d4d1e80cad32e5b5708ca123aa0"
+dependencies = [
+ "bytes",
+ "serde",
+ "take_mut",
 ]
 
 [[package]]
