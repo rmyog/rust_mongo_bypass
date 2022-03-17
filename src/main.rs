@@ -26,7 +26,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         "peruri": {
             "register": {
                 "name":"Lukman Makarim",
-                "phone":"+6281356286096",
+                "phone":"+6214045",
                 "type":"INDIVIDUAL",
                 "email":"lukman@gmail.com",
                 "ktp":"14045",
